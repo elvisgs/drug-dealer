@@ -1,0 +1,44 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      a.brand= title
+      ul.nav
+
+.container
+  .row
+    .span3
+      form(action='/search')
+        div.control-group
+          label.control-label(for='category') Category
+          select#category(multiple='multiple')
+            each cat in categories
+              option= cat
+
+        div.control-group
+          label.control-label(for='frequency') Frequency
+          select#frequency(multiple='multiple')
+            each freq in frequencies
+              option= freq
+
+        div.control-group
+          label.control-label(for='description') Description
+          input#description
+
+        p
+          button.btn.btn-primary(type='submit') Search
+
+    .span9
+      h4 Doses
+
+      each dose in doses
+        dl.dl-horizontal.well
+          dt Name
+          dd= dose.name
+          dt Category
+          dd= dose.category
+          dt Frequency
+          dd= dose.frequency
+          dt Duration
+          dd= dose.duration
+          dt Description
+          dd= dose.description
