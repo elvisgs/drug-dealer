@@ -1,14 +1,9 @@
-
-/**
- * Module dependencies.
- */
-
 var express = require('express'),
-    _ = require('underscore'),
-    doses = require('./doses');
+    _       = require('underscore'),
+    doses   = require('./doses');
 
-var categories = _.uniq(_.pluck(doses, 'category')).sort(),
-    frequencies = _.uniq(_.pluck(doses, 'frequency')).sort();
+var categories  = _.uniq(_.pluck(doses.all, 'category')).sort(),
+    frequencies = _.uniq(_.pluck(doses.all, 'frequency')).sort();
 
 var app = module.exports = express.createServer();
 
@@ -33,35 +28,25 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res) {
-  var top10doses = doses.slice(0, 10);
+var selectionLists = {
+  categories: categories,
+  frequencies: frequencies
+}
 
-  res.render('index', {
-    categories: categories,
-    frequencies: frequencies,
+app.get('/', function(req, res) {
+  var top10doses = doses.all.slice(0, 10);
+
+  res.render('index', _.extend(selectionLists, {
     doses: top10doses
-  });
+  }));
 });
 
 app.post('/', function(req, res) {
-  var filtered = doses;
+  var filtered = doses.find(req.body);
 
-  Object.keys(req.body || {}).forEach(function(k) {
-    var filter = req.body[k];
-
-    filtered = filtered.filter(function(d) {
-      if (_.isArray(filter))
-        return filter.indexOf(d[k]) != -1;
-
-      return d[k].indexOf(filter) != -1;
-    });
-  });
-
-  res.render('index', {
-    categories: categories,
-    frequencies: frequencies,
+  res.render('index', _.extend(selectionLists, {
     doses: filtered
-  });
+  }));
 });
 
 app.listen(process.env.PORT || 3000, function(){

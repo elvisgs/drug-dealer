@@ -1,4 +1,4 @@
-module.exports = [
+var doses = [
   {
     "name": "5HTP",
     "category": "Antidepressant",
@@ -532,3 +532,22 @@ module.exports = [
     "description": "You-Choose is one of our most advanced I-Doser Doses! It puts the power of the Dose in your hands, because sometimes you just want to dose until you feel good. This is where the powerful You-Choose Dose comes in. This is an hour long dose, but it is not intended to be used for the full hour. The concept is simple: Start the dose, and then only dose until you feel the effect you want. If you feel the powerful change of  Delta  after only 10 minutes, then shut the dose off. If you hit full Gamma after 50 minutes and peak, then stop. You do not need to dose for the full hour of the dose, only until you reach the level you want. Included with each You-Choose dose is a DETAILED user manual that outlines what effects You-Choose can achieve. The You-Choose Dose t rave ls through all levels:  Alpha ,  Beta ,  Delta , Gamma, Theta - You WILL hit one level somewhere in this dose and things will just click, you will shut the dose off, and feel like you have never felt before. That amazing point where the right level is achieved feels like nothing you have felt before: Your  brain  snaps into place, and you know you have reached the exact perfect point in the dose. Yes, it is slightly more expensive, but you will FEEL IT in the EXPERIENCE. NOTE! Because of the extreme powerful nature of this dose, it is intended for ADVANCED I-Doser users ONLY!"
   }
 ]
+
+exports.all = doses;
+
+exports.find = function(filters) {
+  var matches = doses;
+
+  Object.keys(filters || {}).forEach(function(k) {
+    var filter = filters[k];
+
+    matches = matches.filter(function(d) {
+      if (Array.isArray(filter))
+        return filter.indexOf(d[k]) != -1;
+
+      return d[k].indexOf(filter) != -1;
+    });
+  });
+
+  return matches;
+};
