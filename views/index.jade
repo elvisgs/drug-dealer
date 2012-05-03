@@ -1,7 +1,7 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      a.brand Drug Dealer
+      a.brand(href='/') Drug Dealer
       ul.nav
 
 .container
@@ -10,13 +10,13 @@
       form(action='/', method='post')
         div.control-group
           label.control-label(for='category') Category
-          select#category(multiple='multiple', name='categories[]')
+          select#category(multiple='multiple', name='category[]')
             each cat in categories
               option= cat
 
         div.control-group
           label.control-label(for='frequency') Frequency
-          select#frequency(multiple='multiple', name='frequencies[]')
+          select#frequency(multiple='multiple', name='frequency[]')
             each freq in frequencies
               option= freq
 
@@ -28,8 +28,6 @@
           button.btn.btn-primary(type='submit') Search
 
     .span9
-      h4 Doses
-
       each dose in doses
         dl.dl-horizontal.well
           dt Name

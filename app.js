@@ -46,21 +46,16 @@ app.get('/', function(req, res) {
 app.post('/', function(req, res) {
   var filtered = doses;
 
-  if (req.body.categories) {
+  Object.keys(req.body || {}).forEach(function(k) {
+    var filter = req.body[k];
+
     filtered = filtered.filter(function(d) {
-      return req.body.categories.indexOf(d.category) != -1;
+      if (_.isArray(filter))
+        return filter.indexOf(d[k]) != -1;
+
+      return d[k].indexOf(filter) != -1;
     });
-  }
-  if (req.body.frequencies) {
-    filtered = filtered.filter(function(d) {
-      return req.body.frequencies.indexOf(d.frequency) != -1;
-    });
-  }
-  if (req.body.description) {
-    filtered = filtered.filter(function(d) {
-      return d.description.indexOf(req.body.description) != -1;
-    });
-  }
+  });
 
   res.render('index', {
     categories: categories,
