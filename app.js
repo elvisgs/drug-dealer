@@ -37,10 +37,35 @@ app.get('/', function(req, res) {
   var top10doses = doses.slice(0, 10);
 
   res.render('index', {
-    title: 'Drug Dealer',
     categories: categories,
     frequencies: frequencies,
     doses: top10doses
+  });
+});
+
+app.post('/', function(req, res) {
+  var filtered = doses;
+
+  if (req.body.categories) {
+    filtered = filtered.filter(function(d) {
+      return req.body.categories.indexOf(d.category) != -1;
+    });
+  }
+  if (req.body.frequencies) {
+    filtered = filtered.filter(function(d) {
+      return req.body.frequencies.indexOf(d.frequency) != -1;
+    });
+  }
+  if (req.body.description) {
+    filtered = filtered.filter(function(d) {
+      return d.description.indexOf(req.body.description) != -1;
+    });
+  }
+
+  res.render('index', {
+    categories: categories,
+    frequencies: frequencies,
+    doses: filtered
   });
 });
 

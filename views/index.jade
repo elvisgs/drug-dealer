@@ -1,28 +1,28 @@
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
-      a.brand= title
+      a.brand Drug Dealer
       ul.nav
 
 .container
   .row
     .span3
-      form(action='/search')
+      form(action='/', method='post')
         div.control-group
           label.control-label(for='category') Category
-          select#category(multiple='multiple')
+          select#category(multiple='multiple', name='categories[]')
             each cat in categories
               option= cat
 
         div.control-group
           label.control-label(for='frequency') Frequency
-          select#frequency(multiple='multiple')
+          select#frequency(multiple='multiple', name='frequencies[]')
             each freq in frequencies
               option= freq
 
         div.control-group
           label.control-label(for='description') Description
-          input#description
+          input#description(name='description')
 
         p
           button.btn.btn-primary(type='submit') Search
