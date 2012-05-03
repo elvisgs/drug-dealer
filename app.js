@@ -3,18 +3,12 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes/routes')
-  , _ = require('underscore')
-  , doses = require('./doses').doses;
+var express = require('express'),
+    _ = require('underscore'),
+    doses = require('./doses');
 
-var categories = _.uniq(doses.map(function(d) {
-    return d.category;
-  })).sort()
-
-  , frequencies = _.uniq(doses.map(function(d) {
-    return d.frequency;
-  })).sort();
+var categories = _.uniq(_.pluck(doses, 'category')).sort(),
+    frequencies = _.uniq(_.pluck(doses, 'frequency')).sort();
 
 var app = module.exports = express.createServer();
 
@@ -40,9 +34,7 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res) {
-  var top10doses = doses.sort(function(a, b) {
-    return a.name.toLowerCase() > b.name.toLowerCase();
-  }).slice(0, 10);
+  var top10doses = doses.slice(0, 10);
 
   res.render('index', {
     title: 'Drug Dealer',

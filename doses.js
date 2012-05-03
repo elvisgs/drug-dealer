@@ -1,4 +1,4 @@
-exports.doses = [
+module.exports = [
   {
     "name": "5HTP",
     "category": "Antidepressant",
@@ -450,7 +450,7 @@ exports.doses = [
   {
     "name": "Reset",
     "category": "Brain  Reset",
-    "frequency": "",
+    "frequency": "undefined",
     "duration": "20 minutes",
     "description": "Reset will reset your  brain  to a normal 8hz level, or normal and awake. This dose was designed so you could 'reset' your  brain  if you wanted to get rid of the effects of a dose, or try another dose and 'clear' your  brain  before you administrate another one! Because many I-Doser doses are so very powerful, we do not recommend you piggy-back doses one after another. If you try a dose, and then want to try another, MAKE SURE you use a reset dose in between! Order some today so you always have them on hand! Using reset is the ONLY way to try multiple doses in succession."
   },
